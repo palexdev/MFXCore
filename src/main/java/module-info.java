@@ -32,6 +32,13 @@ module MFXCore {
 	// Collections
 	exports io.github.palexdev.mfxcore.collections;
 
+	// Controls
+	exports io.github.palexdev.mfxcore.controls;
+
+	// Effects
+	exports io.github.palexdev.mfxcore.effects;
+	exports io.github.palexdev.mfxcore.effects.ripple;
+
 	// Enums
 	exports io.github.palexdev.mfxcore.enums;
 

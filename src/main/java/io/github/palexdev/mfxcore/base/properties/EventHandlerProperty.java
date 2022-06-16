@@ -18,15 +18,24 @@
 
 package io.github.palexdev.mfxcore.base.properties;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
+/**
+ * Simply an {@link ObjectProperty} that wraps an {@link EventHandler} for an {@link Event} of type T.
+ *
+ * @param <T> the type of {@link Event}
+ */
 public class EventHandlerProperty<T extends Event> extends SimpleObjectProperty<EventHandler<T>> {
 
 	//================================================================================
 	// Constructors
 	//================================================================================
+	public EventHandlerProperty() {
+	}
+
 	public EventHandlerProperty(EventHandler<T> initialValue) {
 		super(initialValue);
 	}

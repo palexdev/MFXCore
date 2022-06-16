@@ -14,6 +14,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Removed** for now removed features.
 - **Fixed** for any bug fixes.
 
+## [11.0.4] - 16-06-2022
+
+## Added
+
+- Import effects and MFXIconWrapper from MaterialFX
+
 ## [11.0.2] - 16-06-2022
 
 ## Removed
