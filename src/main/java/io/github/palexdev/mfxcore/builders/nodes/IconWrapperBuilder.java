@@ -31,8 +31,23 @@ public class IconWrapperBuilder extends NodeBuilder<MFXIconWrapper> {
 	//================================================================================
 	// Constructors
 	//================================================================================
+	public IconWrapperBuilder() {
+		this(new MFXIconWrapper());
+	}
+
 	public IconWrapperBuilder(MFXIconWrapper node) {
 		super(node);
+	}
+
+	//================================================================================
+	// Static Methods
+	//================================================================================
+	public static IconWrapperBuilder build() {
+		return new IconWrapperBuilder();
+	}
+
+	public static IconWrapperBuilder build(MFXIconWrapper icon) {
+		return new IconWrapperBuilder(icon);
 	}
 
 	//================================================================================
