@@ -14,6 +14,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Removed** for now removed features.
 - **Fixed** for any bug fixes.
 
+## [11.0.2] - 16-06-2022
+
+## Removed
+
+- Remove BezierEasing from Animations class
+
 ## [11.0.1] - 16-06-2022
 
 - Initial Commit
