@@ -42,7 +42,8 @@ import java.util.ArrayList;
 
 public class NodeUtils {
 
-	private NodeUtils() {}
+	private NodeUtils() {
+	}
 
 	/**
 	 * Centers the specified node in an {@code AnchorPane}.
@@ -82,6 +83,16 @@ public class NodeUtils {
 	 */
 	public static boolean inHierarchy(MouseEvent event, Node node) {
 		return inHierarchy(event.getPickResult().getIntersectedNode(), node);
+	}
+
+	/**
+	 * Convenience method to check if a {@code Node} is visible by checking
+	 * both {@link Node#visibleProperty()} and {@link Node#opacityProperty()}.
+	 *
+	 * @return true if the {@code Node} is visible and opacity is not 0.0
+	 */
+	public static boolean isVisible(Node node) {
+		return node.isVisible() && node.getOpacity() != 0.0;
 	}
 
 	/**

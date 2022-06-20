@@ -21,6 +21,8 @@ package io.github.palexdev.mfxcore.base.beans;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
+import java.util.Objects;
+
 /**
  * This bean contains two {@link DoubleProperty} to keep track/specify the sizes of something
  * in terms of width and height.
@@ -50,6 +52,19 @@ public class SizeBean {
 	//================================================================================
 	// Overridden Methods
 	//================================================================================
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		SizeBean sizeBean = (SizeBean) o;
+		return getWidth() == (sizeBean.getWidth()) && getHeight() == (sizeBean.getHeight());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getWidth(), getHeight());
+	}
+
 	@Override
 	public String toString() {
 		return "W x H (" + getWidth() + " x " + getHeight() + ")";

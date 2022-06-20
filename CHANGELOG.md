@@ -14,6 +14,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Removed** for now removed features.
 - **Fixed** for any bug fixes.
 
+## [11.0.6] - 20-06-2022
+
+## Added
+
+- Added new method to NodeUtils to check visibility
+- Added equals() and hashCode() to SizeBean
+
 ## [11.0.5] - 16-06-2022
 
 ## Changed
