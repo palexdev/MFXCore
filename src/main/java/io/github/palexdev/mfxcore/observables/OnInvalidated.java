@@ -21,7 +21,10 @@ package io.github.palexdev.mfxcore.observables;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ObservableValue;
 
+import java.lang.ref.WeakReference;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Concrete implementation of {@link When} that uses {@link InvalidationListener}s to
@@ -30,6 +33,9 @@ import java.util.function.Consumer;
  * You can specify the action to perform when this happens using a {@link Consumer},
  * {@link #then(Consumer)}.
  * <p>
+ * You can also set a condition that has to be met for the action to be executed (see {@link #condition(Function)}),
+ * and an "else" action that is executed when it is not met, (see {@link #otherwise(BiConsumer)}).
+ * <p></p>
  * To activate the construct do not forget to call {@link #listen()} at the end.
  * <p></p>
  * An example:
@@ -37,7 +43,9 @@ import java.util.function.Consumer;
  * {@code
  *      BooleanProperty aSwitch = new SimpleBooleanProperty(false);
  *      When.onInvalidated(aSwitch) // You can also use... OnInvalidated.forObservable(...)
+ *              .condition(aCondition)
  *              .then(value -> System.out.println("Value switched to: " + value))
+ *              .otherwise((ref, oldValue, newValue) -> System.out.println("Condition not met, execution action B"))
  *              .oneShot()
  *              .listen();
  * }
@@ -49,6 +57,9 @@ public class OnInvalidated<T> extends When<T> {
 	//================================================================================
 	private InvalidationListener listener;
 	private Consumer<T> action;
+	private BiConsumer<WeakReference<When<T>>, T> otherwise = (w, t) -> {
+	};
+	private Function<T, Boolean> condition = t -> true;
 
 	//================================================================================
 	// Constructors
@@ -83,6 +94,46 @@ public class OnInvalidated<T> extends When<T> {
 	}
 
 	/**
+	 * Allows to set an action to perform when the given {@link #condition(Function)} is not met.
+	 * <p></p>
+	 * This makes the "system" much more versatile. Imagine having a one-shot listener that you want to
+	 * dispose anyway even if the condition is not met, you can write something like this;
+	 * <pre>
+	 * {@code
+	 * When.onChanged(observable)
+	 *      .condition(aCondition)
+	 *      .then(action)
+	 *      .otherwise((w, t) -> Optional.ofNullable(w.get()).ifPresent(When::dispose)) // Note the null check
+	 *      .listen();
+	 *
+	 * }
+	 * </pre>
+	 * <p></p>
+	 * Also note that the otherwise action also carries the reference to this object wrapped in a {@link WeakReference}.
+	 */
+	public OnInvalidated<T> otherwise(BiConsumer<WeakReference<When<T>>, T> otherwise) {
+		this.otherwise = otherwise;
+		return this;
+	}
+
+	/**
+	 * Allows to specify a condition under which the set action (see {@link #then(Consumer)})
+	 * is to be executed.
+	 * <p></p>
+	 * The condition is specified through a {@link Function} that provides the current value
+	 * of the {@link ObservableValue}.
+	 * <p></p>
+	 * In case the condition is not met the {@link #otherwise(BiConsumer)} action is executed instead.
+	 * <p></p>
+	 * For one-shot listeners, the action is executed and the listener disposed only if the condition is met, else
+	 * the {@link #otherwise(BiConsumer)} action is executed instead.
+	 */
+	public OnInvalidated<T> condition(Function<T, Boolean> condition) {
+		this.condition = condition;
+		return this;
+	}
+
+	/**
 	 * Activates the {@code OnInvalidated} construct with the previously specified parameters.
 	 * So, builds the {@link InvalidationListener} according to the {@link #isOneShot()} parameter,
 	 * then adds the listener to the specified {@link ObservableValue} and finally puts the Observable and
@@ -92,11 +143,23 @@ public class OnInvalidated<T> extends When<T> {
 	public OnInvalidated<T> listen() {
 		if (oneShot) {
 			listener = invalidated -> {
-				action.accept(observableValue.getValue());
-				dispose();
+				T value = observableValue.getValue();
+				if (condition.apply(value)) {
+					action.accept(value);
+					dispose();
+				} else {
+					otherwise.accept(new WeakReference<>(this), value);
+				}
 			};
 		} else {
-			listener = invalidated -> action.accept(observableValue.getValue());
+			listener = invalidated -> {
+				T value = observableValue.getValue();
+				if (condition.apply(value)) {
+					action.accept(value);
+				} else {
+					otherwise.accept(new WeakReference<>(this), value);
+				}
+			};
 		}
 
 		observableValue.addListener(listener);

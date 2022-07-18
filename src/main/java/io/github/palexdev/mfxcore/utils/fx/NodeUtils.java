@@ -32,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
+import javafx.scene.input.GestureEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
@@ -79,9 +80,23 @@ public class NodeUtils {
 	}
 
 	/**
+	 * Checks if the pressed node is in the hierarchy of the specified node, {@link PickResult#getIntersectedNode()}.
+	 */
+	public static boolean inHierarchy(Node node, GestureEvent event) {
+		return inHierarchy(node, event.getPickResult().getIntersectedNode());
+	}
+
+	/**
 	 * Checks if the specified node is in hierarchy of the pressed node, {@link PickResult#getIntersectedNode()}.
 	 */
 	public static boolean inHierarchy(MouseEvent event, Node node) {
+		return inHierarchy(event.getPickResult().getIntersectedNode(), node);
+	}
+
+	/**
+	 * Checks if the specified node is in hierarchy of the pressed node, {@link PickResult#getIntersectedNode()}.
+	 */
+	public static boolean inHierarchy(GestureEvent event, Node node) {
 		return inHierarchy(event.getPickResult().getIntersectedNode(), node);
 	}
 

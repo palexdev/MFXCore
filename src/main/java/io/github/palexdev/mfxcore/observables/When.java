@@ -28,8 +28,8 @@ import java.util.WeakHashMap;
  * <p>
  * You can read this construct as "When condition changes, then do this"
  * <p>
- * This is just an abstract class that defines common properties and behavior but it has two concrete
- * implementation, {@link OnChanged} and {@link OnInvalidated}.
+ * This is just an abstract class that defines common properties and behavior, but it has two concrete
+ * implementations, {@link OnChanged} and {@link OnInvalidated}.
  * <p>
  * This construct also allows to define one-shot listeners, meaning that the
  * above phrase changes like this: "When condition changes, then do this, then dispose(remove listener)"
