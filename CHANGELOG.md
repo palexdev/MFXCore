@@ -14,6 +14,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Removed** for now removed features.
 - **Fixed** for any bug fixes.
 
+## [11.0.8] - 20-07-2022
+
+## Added
+
+- Added MomentumTransition
+
 ## [11.0.7] - 18-07-2022
 
 ## Added
