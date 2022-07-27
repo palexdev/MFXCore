@@ -37,7 +37,7 @@ public abstract class NumberRange<N extends Number & Comparable<N>> {
 	//================================================================================
 	public NumberRange(N min, N max) {
 		if (min == null || max == null || min.compareTo(max) > 0) {
-			throw new IllegalArgumentException("Invalid range for values: Min[" + getMin() + "], Max[" + getMax() + "]");
+			throw new IllegalArgumentException("Invalid range for values: Min[" + min + "], Max[" + max + "]");
 		}
 
 		this.min = min;

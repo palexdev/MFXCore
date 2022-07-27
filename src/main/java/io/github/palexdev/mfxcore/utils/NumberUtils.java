@@ -142,6 +142,74 @@ public class NumberUtils {
 	}
 
 	/**
+	 * Given a certain value, the range of possible values, and a different range, converts the given value
+	 * from its range to the given second range.
+	 * <p></p>
+	 * For example let's say I have a value of 0 that can go from -100 to 100 and I want to convert the
+	 * value to a range of 0 to 100, the converted value will be 50 (0 is at the middle in the -100-100 range, and
+	 * 50 is at the middle in the 0-100 range).
+	 */
+	public static double mapOneRangeToAnother(double value, DoubleRange fromRange, DoubleRange toRange) {
+		double deltaA = fromRange.getMax() - fromRange.getMin();
+		double deltaB = toRange.getMax() - toRange.getMin();
+		double scale = deltaB / deltaA;
+		double negA = -1 * fromRange.getMin();
+		double offset = (negA * scale) + toRange.getMin();
+		return (value * scale) + offset;
+	}
+
+	/**
+	 * Given a certain value, the range of possible values, and a different range, converts the given value
+	 * from its range to the given second range.
+	 * <p></p>
+	 * For example let's say I have a value of 0 that can go from -100 to 100 and I want to convert the
+	 * value to a range of 0 to 100, the converted value will be 50 (0 is at the middle in the -100-100 range, and
+	 * 50 is at the middle in the 0-100 range).
+	 */
+	public static float mapOneRangeToAnother(float value, FloatRange fromRange, FloatRange toRange) {
+		double deltaA = fromRange.getMax() - fromRange.getMin();
+		double deltaB = toRange.getMax() - toRange.getMin();
+		double scale = deltaB / deltaA;
+		double negA = -1 * fromRange.getMin();
+		double offset = (negA * scale) + toRange.getMin();
+		return (float) ((value * scale) + offset);
+	}
+
+	/**
+	 * Given a certain value, the range of possible values, and a different range, converts the given value
+	 * from its range to the given second range.
+	 * <p></p>
+	 * For example let's say I have a value of 0 that can go from -100 to 100 and I want to convert the
+	 * value to a range of 0 to 100, the converted value will be 50 (0 is at the middle in the -100-100 range, and
+	 * 50 is at the middle in the 0-100 range).
+	 */
+	public static int mapOneRangeToAnother(int value, IntegerRange fromRange, IntegerRange toRange) {
+		double deltaA = fromRange.getMax() - fromRange.getMin();
+		double deltaB = toRange.getMax() - toRange.getMin();
+		double scale = deltaB / deltaA;
+		double negA = -1 * fromRange.getMin();
+		double offset = (negA * scale) + toRange.getMin();
+		return (int) ((value * scale) + offset);
+	}
+
+	/**
+	 * Given a certain value, the range of possible values, and a different range, converts the given value
+	 * from its range to the given second range.
+	 * <p></p>
+	 * For example let's say I have a value of 0 that can go from -100 to 100 and I want to convert the
+	 * value to a range of 0 to 100, the converted value will be 50 (0 is at the middle in the -100-100 range, and
+	 * 50 is at the middle in the 0-100 range).
+	 */
+	public static long mapOneRangeToAnother(long value, LongRange fromRange, LongRange toRange) {
+		double deltaA = fromRange.getMax() - fromRange.getMin();
+		double deltaB = toRange.getMax() - toRange.getMin();
+		double scale = deltaB / deltaA;
+		double negA = -1 * fromRange.getMin();
+		double offset = (negA * scale) + toRange.getMin();
+		return (long) ((value * scale) + offset);
+	}
+
+	/**
 	 * Given a certain value, finds the closest value in the given numbers list.
 	 */
 	public static double closestValueTo(double val, List<Double> list) {
